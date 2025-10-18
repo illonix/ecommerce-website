@@ -6,6 +6,8 @@ import db from "@/db/db";
 import fs from "fs/promises";
 import { notFound, redirect } from "next/navigation";
 import path from "path";
+import { revalidatePath } from "next/cache";
+
 
 const fileSchema = z.instanceof(File, { message: "Required" });
 const imageSchema = fileSchema.refine(
@@ -50,6 +52,8 @@ export async function addProduct(prevState: unknown, formData: FormData) {
     },
   });
 
+  revalidatePath("/");
+  revalidatePath("/products");
   redirect("/admin/products");
 }
 
@@ -82,7 +86,7 @@ export async function updateProduct(
 
   let imagePath = product.imagePath
   if (data.image != null && data.image.size > 0) {
-    await fs.unlink(`public${product.imagePath}`)
+    await fs.unlink(path.join("public", product.imagePath));
     imagePath = `/products/${crypto.randomUUID()}-${data.image.name}`
     await fs.writeFile(
       `public${imagePath}`,
@@ -101,6 +105,9 @@ export async function updateProduct(
     },
   })
 
+  revalidatePath("/");
+  revalidatePath("/products");
+
   redirect("/admin/products")
 }
 
@@ -114,6 +121,9 @@ export async function toggleProductAvailability(
       isAvailableForPurchase,
     },
   });
+
+  revalidatePath("/");
+  revalidatePath("/products");
 }
 
 export async function deleteProduct(id: string) {
@@ -135,4 +145,7 @@ export async function deleteProduct(id: string) {
   } catch (err) {
     console.error("Image already missing:", product.imagePath, err);
   }
+
+  revalidatePath("/");
+  revalidatePath("/products");
 }
