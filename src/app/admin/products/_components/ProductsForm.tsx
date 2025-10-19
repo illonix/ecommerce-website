@@ -9,7 +9,7 @@ import { useState } from "react";
 import { addProduct, updateProduct } from "../../_actions/products";
 import React from "react";
 import { useFormStatus } from "react-dom";
-import { Product } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import Image from "next/image";
 import db from "@/db/db";
 
