@@ -36,6 +36,7 @@ export default function AdminProductsPage() {
 }
 
 async function ProductsTable() {
+  
   const products = await db.product.findMany({
     select: {
       id: true,
