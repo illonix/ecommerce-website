@@ -1,6 +1,7 @@
 import { ProductCard, ProductCardSkeleton } from "@/components/ProductCard"
 import db from "@/db/db"
-import { cache, Suspense } from "react"
+import { cache } from "@/lib/cache"
+import { Suspense } from "react"
 
 const getProducts = cache(() => {
   return db.product.findMany({
