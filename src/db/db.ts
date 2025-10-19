@@ -1,17 +1,15 @@
+// db.ts
 import { PrismaClient } from '@prisma/client';
 
 declare global {
   var prisma: PrismaClient | undefined;
 }
 
-let db: PrismaClient;
+// Lazy singleton
+const db: PrismaClient = globalThis.prisma ?? new PrismaClient();
 
-export function getDb() {
-  if (!db) {
-    db = globalThis.prisma ?? new PrismaClient();
-    if (process.env.NODE_ENV !== 'production') globalThis.prisma = db;
-  }
-  return db;
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prisma = db; // prevent multiple instances in dev
 }
 
-export default getDb();
+export default db;
