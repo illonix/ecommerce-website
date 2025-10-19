@@ -1,15 +1,16 @@
+// db.ts
 import { PrismaClient } from '@prisma/client';
 
-const prismaClientSingleton = () => {
-    return new PrismaClient()
-}
-
 declare global {
-    var prisma: undefined | ReturnType<typeof prismaClientSingleton>
+  var prisma: PrismaClient | undefined;
 }
 
-const db = globalThis.prisma ?? prismaClientSingleton()
+// Only create a new PrismaClient if it doesn't already exist
+const db = globalThis.prisma ?? new PrismaClient();
 
-export default db
+// In dev, attach PrismaClient to globalThis to prevent multiple instances during HMR
+if (process.env.NODE_ENV !== 'production') {
+  globalThis.prisma = db;
+}
 
-if(process.env.NODE_ENV !== 'production') globalThis.prisma = db
+export default db;

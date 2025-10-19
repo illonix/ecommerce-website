@@ -148,7 +148,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\Esports\\Desktop\\javascript\\generated\\prisma",
+      "value": "C:\\Users\\Esports\\Documents\\GitHub\\ecommerce-website\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -162,7 +162,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\Esports\\Desktop\\javascript\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\Esports\\Documents\\GitHub\\ecommerce-website\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
