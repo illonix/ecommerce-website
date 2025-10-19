@@ -1,5 +1,5 @@
 import db from "@/db/db";
-import { Product } from "@prisma/client";
+import type { Prisma } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
@@ -38,10 +38,13 @@ export default async function HomePage() {
   );
 }
 
+type ProductType = Awaited<ReturnType<typeof db.product.findMany>>[number];
+
 type ProductGridSectionProps = {
   title: string;
-  productsFetcher: () => Promise<Product[]>;
+  productsFetcher: () => Promise<ProductType[]>;
 };
+
 
 function ProductGridSection({
   productsFetcher,
@@ -79,7 +82,7 @@ function ProductGridSection({
 async function ProductSuspense({
   productsFetcher,
 }: {
-  productsFetcher: () => Promise<Product[]>;
+  productsFetcher: () => Promise<ProductType[]>;
 }) {
   return (await productsFetcher()).map((product) => (
     <ProductCard key={product.id} {...product} />
