@@ -11,8 +11,11 @@ import React from "react";
 import { useFormStatus } from "react-dom";
 import { Product } from "@prisma/client";
 import Image from "next/image";
+import db from "@/db/db";
 
-export function ProductForm({ product }: { product?: Product | null }) {
+type ProductType = Awaited<ReturnType<typeof db.product.findUnique>>;
+
+export function ProductForm({ product }: { product?: ProductType | null }) {
   const [error, action] = React.useActionState(
     product == null ? addProduct : updateProduct.bind(null, product.id),
     {}
