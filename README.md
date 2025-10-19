@@ -21,7 +21,7 @@ This project provides a fast, dynamic shopping experience with product listings,
 |-----------|-------------|
 | Framework | [Next.js 14](https://nextjs.org/) |
 | Styling | Tailwind CSS |
-| Database | (Add your DB, e.g., Prisma + SQLite / MongoDB) |
+| Database | (Prisma + SQLite) |
 | Icons | Lucide React |
 | UI Components | shadcn/ui |
 | File System | Node.js fs/promises |
