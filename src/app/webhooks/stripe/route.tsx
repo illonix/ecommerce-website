@@ -18,10 +18,14 @@ export async function POST(req: NextRequest) {
       sig,
       process.env.STRIPE_WEBHOOK_SECRET as string
     );
-  } catch (err: any) {
+  } catch (err: unknown) {
+  if (err instanceof Error) {
     console.error(`❌ Webhook signature verification failed: ${err.message}`);
-    return new NextResponse("Invalid signature", { status: 400 });
+  } else {
+    console.error("❌ Webhook signature verification failed: Unknown error");
   }
+  return new NextResponse("Invalid signature", { status: 400 });
+}
 
   if (event.type === "charge.succeeded") {
     const charge = event.data.object;
